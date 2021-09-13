@@ -117,7 +117,7 @@ public class Test {
 
     }
     public static void main(String[] args) throws Exception {
-        //batchTest(args);
+        batchTest(args);
         test1WR();
     }
 }
