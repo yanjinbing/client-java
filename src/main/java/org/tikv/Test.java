@@ -15,18 +15,17 @@ import java.util.concurrent.atomic.AtomicLong;
 public class Test {
     public static void test1WR() throws Exception {
 
-        TiConfiguration conf = TiConfiguration.createRawDefault("localhost:2379");
-        conf.setDBPrefix("test");
+        TiConfiguration conf = TiConfiguration.createRawDefault("172.20.94.33:80");
         TiSession session = TiSession.create(conf);
         RawKVClient client = session.createRawClient();
 
-        for(int i = 1; i< 1000; i++){
+        for(int i = 1; i< 10; i++){
             ByteString key = ByteString.copyFromUtf8(String.format("t10_r%010d", i));
             ByteString value = ByteString.copyFromUtf8(String.format("V-%d", i));
             client.put(key, value);
         }
         for(int i = 1; i< 10; i++){
-            ByteString key = ByteString.copyFromUtf8(String.format("%d", i));
+            ByteString key = ByteString.copyFromUtf8(String.format("t10_r%010d", i));
             Optional<ByteString> value = client.get(key);
             if ( value.isPresent() )
                 System.out.println(value.get().toStringUtf8());
@@ -117,7 +116,7 @@ public class Test {
 
     }
     public static void main(String[] args) throws Exception {
-        batchTest(args);
+     //   batchTest(args);
         test1WR();
     }
 }
